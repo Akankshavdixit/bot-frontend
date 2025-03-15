@@ -14,7 +14,7 @@ const Chatbot = () => {
 
     if (!selectedData.year) {
       setSelectedData({ ...selectedData, year: option });
-      newOptions = ["Computer Engineering", "Information Technology", "Electronics and Telecommunication Engineering", "First year Engineering"];
+      newOptions = ["Computer Engineering", "Information Technology", "Electronics and Telecommunication Engineering", "First Year Engineering"];
       newMessages.push({ text: "Select your branch:", type: "bot" });
     } else if (!selectedData.branch) {
       setSelectedData({ ...selectedData, branch: option });
