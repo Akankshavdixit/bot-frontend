@@ -1,62 +1,93 @@
-.app {
-  text-align: center;
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: Arial, sans-serif;
+  background: #121212;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
+/* Title */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Chat Container */
 .chat-container {
-  width: 400px;
-  margin: auto;
-  border: 1px solid #ccc;
+  width: 500px; /* Fixed width */
+  max-height: 80vh; /* Allows vertical growth */
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
   border-radius: 10px;
-  padding: 10px;
-  background: #f9f9f9;
-}
-
-.chatbox {
-  max-height: 400px;
+  padding: 15px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
   overflow-y: auto;
-  padding: 10px;
 }
 
+/* Chat Box */
+.chatbox {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Messages */
 .message {
   padding: 8px;
   margin: 5px;
   border-radius: 5px;
-  max-width: 80%;
+  max-width: 70%;
+  word-wrap: break-word;
 }
 
 .message.bot {
-  background: #d1e7fd;
+  background: #333;
   align-self: flex-start;
 }
 
 .message.user {
-  background: #c3f3c3;
+  background: #007bff;
+  color: white;
   align-self: flex-end;
 }
 
+/* Options Section */
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 .option-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 10px 15px;
   border: none;
   background: #007bff;
   color: white;
   border-radius: 5px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .option-button:hover {
   background: #0056b3;
-}
-
-.download-link {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.download-link:hover {
-  text-decoration: underline;
 }
