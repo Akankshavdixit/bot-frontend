@@ -91,3 +91,94 @@ body {
 .option-button:hover {
   background: #0056b3;
 }
+
+
+body {
+  background-color: #121212;
+  color: #FFA500;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.forum-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #1e1e1e;
+}
+
+.navbar button {
+  background-color: #FFA500;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  color: #121212;
+  font-weight: bold;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.tabs button {
+  background: none;
+  border: 1px solid #FFA500;
+  color: #FFA500;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.tabs .active {
+  background-color: #FFA500;
+  color: #121212;
+}
+
+.questions {
+  background: #1e1e1e;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.question {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #FFA500;
+}
+
+.question:hover {
+  background-color: #FFA500;
+  color: #121212;
+}
+
+.answers {
+  background: #1e1e1e;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.add-question, .chatbot-button {
+  background-color: #FFA500;
+  color: #121212;
+  border: none;
+  padding: 10px;
+  margin-top: 15px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.add-question:hover, .chatbot-button:hover {
+  background-color: #ffcc80;
+}

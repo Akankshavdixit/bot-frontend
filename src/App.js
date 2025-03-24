@@ -1,11 +1,12 @@
 import React from "react";
 import Chatbot from "./components/Chatbot";
+import Forum from "./components/Forum"
 import "./styles.css";
 
 const App = () => {
   return (
     <div className="app">
-      <Chatbot />
+      <Forum />
     </div>
   );
 };
