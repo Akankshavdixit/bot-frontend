@@ -204,20 +204,210 @@ body {
   color: #ffffff;
 }
 
-/* Buttons */
-.add-question,
-.chatbot-button {
-  background: #00a878;
-  color: #ffffff;
-  border: none;
-  padding: 12px 20px;
-  margin-top: 20px;
-  cursor: pointer;
-  width: 200px;
-  border-radius: 5px;
+
+
+.auth-container {
+  width: 400px;
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.add-question:hover,
-.chatbot-button:hover {
+.auth-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #00a878;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  background: #282828;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.auth-form input:focus {
+  border-color: #00a878;
+  outline: none;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background: #00a878;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.auth-form button:hover {
   background: #00865a;
 }
+
+/* Toggle between Login and Signup */
+.toggle-auth {
+  margin-top: 15px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #00a878;
+}
+
+.toggle-auth:hover {
+  text-decoration: underline;
+}
+
+/* Form Container */
+/* Add Question Form Styling */
+.add-question-container {
+  max-width: 500px;
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+  color: #d4d4d4;
+}
+
+/* Title */
+.add-question-container h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #00a878;
+}
+
+/* Form Inputs */
+.add-question-form input,
+.add-question-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  background: #282828;
+  color: white;
+}
+
+.add-question-form textarea {
+  height: 100px;
+  resize: none;
+}
+
+/* Input Focus Effect */
+.add-question-form input:focus,
+.add-question-form textarea:focus {
+  border-color: #00a878;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 168, 120, 0.5);
+}
+
+/* File Upload */
+.add-question-form input[type="file"] {
+  border: none;
+  padding: 5px;
+  background: transparent;
+  cursor: pointer;
+  color: white;
+}
+
+/* Submit Button */
+.add-question-form button {
+  width: 100%;
+  padding: 12px;
+  background: #00a878;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-question-form button:hover {
+  background: #00865a;
+}
+
+/* Message Styling */
+.message {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.message.success {
+  color: #28a745;
+}
+
+.message.error {
+  color: #dc3545;
+}
+
+
+.logout-button {
+  background-color: #ff4d4d; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Padding for better clickability */
+  font-size: 16px; /* Readable font size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.logout-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
+.logout-button:active {
+  background-color: #a30000; /* Even darker red when clicked */
+}
+
+.floating-button {
+  position: fixed;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.add-question {
+  bottom: 90px; /* Above chatbot */
+  background-color: #28a745; /* Green */
+}
+
+.add-question:hover {
+  background-color: #218838; /* Darker green */
+}
+
+.chatbot-button {
+  bottom: 20px;
+  background-color: #ff5722; /* Orange */
+}
+
+.chatbot-button:hover {
+  background-color: #e64a19;
+}
+

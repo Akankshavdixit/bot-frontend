@@ -23,4 +23,28 @@ export const fetchSubjects = async (year, branch) => {
       return null;
     }
   };
+
+
+export const signIn = async (email, password) => {
+  try {
+    const response = await fetch(`http://localhost:3001/api/v1/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem("token", data.data);
+      return { success: true, message: data.message };
+    } else {
+      return { success: false, message: data.error };
+    }
+  } catch (error) {
+    console.error("Error signing in:", error);
+    return { success: false, message: "Something went wrong" };
+  }
+};
   

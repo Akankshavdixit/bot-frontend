@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { FaPlus, FaRobot } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Chatbot from "./Chatbot";
+import "../styles.css";
 
 const categories = ["GATE", "GRE", "CAT", "CP", "Development", "AI", "ML"];
 const dummyQuestions = {
@@ -146,81 +149,101 @@ const dummyQuestions = {
 };
 
 export default function Forum() {
-    const [selectedCategory, setSelectedCategory] = useState("GATE");
-    const [selectedQuestion, setSelectedQuestion] = useState(null);
-    const [showChatbot, setShowChatbot] = useState(false);
-  
-    // Function to handle clicks outside question/answer box
-    const handleClickOutside = (event) => {
-      if (!event.target.closest(".question") && !event.target.closest(".answers")) {
-        setSelectedQuestion(null);
-      }
-    };
-  
-    return (
-      <div className="forum-container" onClick={handleClickOutside}>
-        <nav className="navbar">
-          <h1>Discussion Forum</h1>
-          <div>
-            <button>About</button>
-            <button>My Profile</button>
-          </div>
-        </nav>
-  
-        {/* Category Tabs */}
-        <div className="tabs">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className={selectedCategory === cat ? "active" : ""}
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent this click from closing the question
-                setSelectedCategory(cat);
-                setSelectedQuestion(null);
-              }}
-            >
-              {cat}
-            </button>
-          ))}
+  const [selectedCategory, setSelectedCategory] = useState("GATE");
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [showChatbot, setShowChatbot] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate hook
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
+  const handleClickOutside = (event) => {
+    if (!event.target.closest(".question") && !event.target.closest(".answers")) {
+      setSelectedQuestion(null);
+    }
+  };
+
+  const handleAddQuestionClick = () => {
+    navigate("/add-question"); // Navigate to AddQuestion page
+  };
+
+  return (
+    <div className="forum-container" onClick={handleClickOutside}>
+      <nav className="navbar">
+        <h1>Discussion Forum</h1>
+        <div>
+          <button>About</button>
+          <button>My Profile</button>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
         </div>
-  
-        {/* Questions List */}
-        <div className="questions">
-          {dummyQuestions[selectedCategory]?.map((q) => (
-            <div
-              key={q.id}
-              className={`question ${selectedQuestion?.id === q.id ? "active" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent closing when clicking a question
-                setSelectedQuestion(selectedQuestion?.id === q.id ? null : q);
-              }}
-            >
-              <strong>{q.question}</strong>
-              <p className="preview">{q.answers.slice(0, 2).join(", ")}...</p>
-            </div>
-          ))}
-        </div>
-  
-        {/* Answers Section */}
-        {selectedQuestion && (
-          <div className="answers" onClick={(e) => e.stopPropagation()}>
-            <h3>{selectedQuestion.question}</h3>
-            {selectedQuestion.answers.map((ans, idx) => (
-              <p key={idx} className="answer-box">{ans}</p>
-            ))}
-          </div>
-        )}
-  
-        {/* Buttons */}
-        <button className="add-question">Add Question</button>
-        <button className="chatbot-button" onClick={(e) => {
-          e.stopPropagation();
-          setShowChatbot(true);
-        }}>
-          Resource Chatbot
-        </button>
-  
-        {showChatbot && <Chatbot />}
+      </nav>
+
+      {/* Category Tabs */}
+      <div className="tabs">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            className={selectedCategory === cat ? "active" : ""}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent this click from closing the question
+              setSelectedCategory(cat);
+              setSelectedQuestion(null);
+            }}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
-    );
-  }
+
+      {/* Questions List */}
+      <div className="questions">
+        {dummyQuestions[selectedCategory]?.map((q) => (
+          <div
+            key={q.id}
+            className={`question ${selectedQuestion?.id === q.id ? "active" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent closing when clicking a question
+              setSelectedQuestion(selectedQuestion?.id === q.id ? null : q);
+            }}
+          >
+            <strong>{q.question}</strong>
+            <p className="preview">{q.answers.slice(0, 2).join(", ")}...</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Answers Section */}
+      {selectedQuestion && (
+        <div className="answers" onClick={(e) => e.stopPropagation()}>
+          <h3>{selectedQuestion.question}</h3>
+          {selectedQuestion.answers.map((ans, idx) => (
+            <p key={idx} className="answer-box">{ans}</p>
+          ))}
+        </div>
+      )}
+
+      {/* Add Question Button */}
+      <button
+          className="floating-button add-question"
+          onClick={handleAddQuestionClick}
+        >
+        <FaPlus />
+      </button>
+
+<button
+  className="floating-button chatbot-button"
+  onClick={(e) => {
+    e.stopPropagation();
+    setShowChatbot(!showChatbot);
+  }}
+>
+  <FaRobot />
+</button>
+
+      {showChatbot && <Chatbot />}
+    </div>
+  );
+}
+
