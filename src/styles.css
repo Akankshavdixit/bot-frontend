@@ -129,56 +129,62 @@ body {
 }
 
 /* Scrollable Tabs */
+/* Scrollable Tabs - Dark Theme */
 .tabs-wrapper {
+  width: 100%;
   overflow-x: auto;
-  white-space: nowrap;
-  padding: 8px 16px;
-  background-color: #f8f8f8;
+  -webkit-overflow-scrolling: touch;
+  background-color: #181818; /* Dark background */
   margin-bottom: 16px;
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .tabs-scroll {
-  display: flex;
+  display: inline-flex;
   gap: 12px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #888 transparent;
-}
-
-.tabs-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-
-.tabs-scroll::-webkit-scrollbar-thumb {
-  background-color: #aaa;
-  border-radius: 4px;
-}
-
-.tabs-scroll::-webkit-scrollbar-track {
-  background: transparent;
+  padding: 0 16px;
+  min-width: 100%;
 }
 
 .tabs-scroll button {
-  flex: 0 0 auto;
+  flex-shrink: 0;
   padding: 8px 16px;
-  background-color: #eee;
+  background-color: #282828; /* Dark button background */
   border: none;
   border-radius: 20px;
   font-size: 14px;
   cursor: pointer;
+  transition: all 0.2s ease;
+  color: #d4d4d4; /* Light text */
   white-space: nowrap;
-  transition: 0.2s;
 }
 
 .tabs-scroll button:hover {
-  background-color: #ddd;
+  background-color: #333; /* Slightly lighter on hover */
+  color: #ffffff;
 }
 
 .tabs-scroll button.active {
-  background-color: #007bff;
+  background-color: #00a878; /* Your theme green */
   color: white;
+  font-weight: 500;
 }
 
+/* Scrollbar styling - Dark Theme */
+.tabs-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs-wrapper::-webkit-scrollbar-thumb {
+  background-color: #00a878; /* Theme green */
+  border-radius: 4px;
+}
+
+.tabs-wrapper::-webkit-scrollbar-track {
+  background: #282828; /* Dark track */
+}
 
 
 
