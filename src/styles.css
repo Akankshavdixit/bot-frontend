@@ -128,27 +128,59 @@ body {
   border-radius: 5px;
 }
 
-.tabs {
+/* Scrollable Tabs */
+.tabs-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 8px 16px;
+  background-color: #f8f8f8;
+  margin-bottom: 16px;
+}
+
+.tabs-scroll {
   display: flex;
-  justify-content: center;
-  margin: 20px 0;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
 }
 
-.tabs button {
-  background: #222;
-  color: #d4d4d4;
+.tabs-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs-scroll::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 4px;
+}
+
+.tabs-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs-scroll button {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  background-color: #eee;
   border: none;
-  padding: 10px 15px;
-  margin: 0 5px;
+  border-radius: 20px;
+  font-size: 14px;
   cursor: pointer;
-  border-radius: 5px;
+  white-space: nowrap;
+  transition: 0.2s;
 }
 
-.tabs button.active {
-  background: #00a878;
-  font-weight: bold;
-  color: #fff;
+.tabs-scroll button:hover {
+  background-color: #ddd;
 }
+
+.tabs-scroll button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+
+
 
 /* Question Section */
 .questions {
@@ -410,4 +442,56 @@ body {
 .chatbot-button:hover {
   background-color: #e64a19;
 }
+
+.dropdown-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.dropdown-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.category-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 10;
+  background: black;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.dropdown-menu li {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #282828;
+}
+
 

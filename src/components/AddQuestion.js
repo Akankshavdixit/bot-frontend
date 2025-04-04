@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "../styles.css";
 
@@ -8,6 +8,45 @@ const AddQuestion = () => {
   const [categories, setCategories] = useState("");
   const [files, setFiles] = useState([]);
   const [message, setMessage] = useState("");
+
+  const [allCategories, setAllCategories] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/categories");
+        if (response.status === 200) {
+          setAllCategories(response.data.data); // expecting [{id, name}, ...]
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // 🧠 handle outside click to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleCategorySelect = (categoryName) => {
+    const current = categories.split(",").map((c) => c.trim()).filter(Boolean);
+    if (!current.includes(categoryName)) {
+      const updated = [...current, categoryName].join(",");
+      setCategories(updated);
+    }
+  };
 
   const handleFileChange = (e) => {
     setFiles(e.target.files);
@@ -25,15 +64,10 @@ const AddQuestion = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-
-      // Append categories correctly
-      categories.split(",").forEach(cat => formData.append("categories", cat.trim()));
-
+      categories.split(",").forEach((cat) => formData.append("categories", cat.trim()));
       for (let i = 0; i < files.length; i++) {
         formData.append("quesFiles", files[i]);
       }
-
-      console.log([...formData]);
 
       const response = await axios.post(
         "http://localhost:3000/api/v1/questions",
@@ -62,7 +96,11 @@ const AddQuestion = () => {
   return (
     <div className="add-question-container">
       <h2>Add a Question</h2>
-      {message && <p className={`message ${message.includes("successfully") ? "success" : "error"}`}>{message}</p>}
+      {message && (
+        <p className={`message ${message.includes("successfully") ? "success" : "error"}`}>
+          {message}
+        </p>
+      )}
       <form onSubmit={handleSubmit} className="add-question-form">
         <input
           type="text"
@@ -77,13 +115,30 @@ const AddQuestion = () => {
           onChange={(e) => setDescription(e.target.value)}
           required
         ></textarea>
-        <input
-          type="text"
-          placeholder="Enter categories (comma separated)"
-          value={categories}
-          onChange={(e) => setCategories(e.target.value)}
-          required
-        />
+
+        {/* Category field with dropdown */}
+        <div className="dropdown-container" ref={dropdownRef}>
+          <div className="dropdown-input" onClick={() => setShowDropdown(!showDropdown)}>
+            <input
+              type="text"
+              value={categories}
+              readOnly
+              placeholder="Select categories"
+              className="category-input"
+            />
+            <span className="dropdown-arrow">▼</span>
+          </div>
+          {showDropdown && (
+            <ul className="dropdown-menu">
+              {allCategories.map((cat) => (
+                <li key={cat.id} onClick={() => handleCategorySelect(cat.name)}>
+                  {cat.name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
         <input
           type="file"
           multiple
