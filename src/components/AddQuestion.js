@@ -1,8 +1,14 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import "../styles.css";
 
+
+
+
 const AddQuestion = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState("");
@@ -29,7 +35,7 @@ const AddQuestion = () => {
     fetchCategories();
   }, []);
 
-  // 🧠 handle outside click to close dropdown
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -86,6 +92,8 @@ const AddQuestion = () => {
         setDescription("");
         setCategories("");
         setFiles([]);
+
+        setTimeout(() => navigate("/"), 1000);
       }
     } catch (error) {
       setMessage("Failed to add question.");
