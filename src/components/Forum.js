@@ -9,7 +9,8 @@ export default function Forum() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [questions, setQuestions] = useState([]);
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+  const [questionDetails, setQuestionDetails] = useState(null);
   const [showChatbot, setShowChatbot] = useState(false);
   const [showAnswerForm, setShowAnswerForm] = useState(false);
   const [answerTitle, setAnswerTitle] = useState("");
@@ -29,14 +30,10 @@ export default function Forum() {
             setSelectedCategory(categoryArray[0].name);
           }
         } else {
-          console.error("Unexpected categories response:", res.data);
           setCategories([]);
         }
       })
-      .catch((err) => {
-        console.error("Error fetching categories:", err);
-        setCategories([]);
-      });
+      .catch(() => setCategories([]));
   }, []);
 
   useEffect(() => {
@@ -48,14 +45,10 @@ export default function Forum() {
           if (Array.isArray(questionArray)) {
             setQuestions(questionArray);
           } else {
-            console.error("Unexpected questions response:", res.data);
             setQuestions([]);
           }
         })
-        .catch((err) => {
-          console.error("Error fetching questions:", err);
-          setQuestions([]);
-        });
+        .catch(() => setQuestions([]));
     }
   }, [selectedCategory]);
 
@@ -65,14 +58,31 @@ export default function Forum() {
   };
 
   const handleClickOutside = (event) => {
-    if (!event.target.closest(".question") && !event.target.closest(".answers")) {
-      setSelectedQuestion(null);
+    if (
+      !event.target.closest(".question") &&
+      !event.target.closest(".answers")
+    ) {
+      setSelectedQuestionId(null);
+      setQuestionDetails(null);
       setShowAnswerForm(false);
     }
   };
 
   const handleAddQuestionClick = () => {
     navigate("/add-question");
+  };
+
+  const handleQuestionClick = async (questionId) => {
+    setSelectedQuestionId(questionId);
+    try {
+      const res = await axios.get(`http://localhost:3000/api/v1/questions/${questionId}`);
+      if (res.data?.success) {
+        setQuestionDetails(res.data.data);
+        setShowAnswerForm(false);
+      }
+    } catch (err) {
+      console.error("Error fetching question details:", err);
+    }
   };
 
   const handleAnswerSubmit = async (e) => {
@@ -83,10 +93,10 @@ export default function Forum() {
       setTimeout(() => setMessage(""), 4000);
       return;
     }
-    if (!selectedQuestion) return;
+    if (!questionDetails?.question?.id) return;
 
     const formData = new FormData();
-    formData.append("questionId", selectedQuestion.id);
+    formData.append("questionId", questionDetails.question.id);
     formData.append("title", answerTitle);
     formData.append("description", answerDescription);
     if (answerFile) {
@@ -94,7 +104,7 @@ export default function Forum() {
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/api/v1/answers", formData, {
+      await axios.post("http://localhost:3000/api/v1/answers", formData, {
         headers: {
           "x-access-token": token,
           "Content-Type": "multipart/form-data",
@@ -103,13 +113,12 @@ export default function Forum() {
 
       setMessage("Question answered successfully");
       setTimeout(() => setMessage(""), 4000);
-
       setAnswerTitle("");
       setAnswerDescription("");
       setAnswerFile(null);
       setShowAnswerForm(false);
+      handleQuestionClick(questionDetails.question.id); // Refresh
     } catch (err) {
-      console.error("Error submitting answer:", err);
       setMessage("Failed to submit answer");
       setTimeout(() => setMessage(""), 4000);
     }
@@ -122,69 +131,83 @@ export default function Forum() {
         <div>
           <button>About</button>
           <button>My Profile</button>
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </nav>
 
-      {/* Message Banner */}
-      {message && (
-        <div className="message-banner">
-          {message}
-        </div>
-      )}
+      {message && <div className="message-banner">{message}</div>}
 
-      {/* Scrollable Tabs */}
-      <div className="tabs-wrapper">
-        <div className="tabs-scroll">
-          {Array.isArray(categories) && categories.length > 0 ? (
-            categories.map((cat, index) => (
+      {/* Tabs */}
+      {!questionDetails && (
+        <div className="tabs-wrapper">
+          <div className="tabs-scroll">
+            {categories.map((cat, index) => (
               <button
                 key={index}
                 className={selectedCategory === cat.name ? "active" : ""}
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedCategory(cat.name);
-                  setSelectedQuestion(null);
-                  setShowAnswerForm(false);
+                  setSelectedQuestionId(null);
+                  setQuestionDetails(null);
                 }}
               >
                 {cat.name.replace(/_/g, " ")}
               </button>
-            ))
-          ) : (
-            <p>Loading categories...</p>
-          )}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Questions List */}
-      <div className="questions">
-        {questions.length > 0 ? (
-          questions.map((q) => (
-            <div
-              key={q.id}
-              className={`question ${selectedQuestion?.id === q.id ? "active" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedQuestion(selectedQuestion?.id === q.id ? null : q);
-                setShowAnswerForm(false);
-              }}
-            >
-              <strong>{q.title}</strong>
-              <p className="preview">{q.description?.slice(0, 50)}...</p>
-            </div>
-          ))
-        ) : (
-          <p>No questions available.</p>
-        )}
-      </div>
+      {!questionDetails && (
+        <div className="questions">
+          {questions.length > 0 ? (
+            questions.map((q) => (
+              <div
+                key={q.id}
+                className={`question ${selectedQuestionId === q.id ? "active" : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleQuestionClick(q.id);
+                }}
+              >
+                <strong>{q.title}</strong>
+                <p className="preview">{q.description?.slice(0, 50)}...</p>
+              </div>
+            ))
+          ) : (
+            <p>No questions available.</p>
+          )}
+        </div>
+      )}
 
-      {/* Answers Section */}
-      {selectedQuestion && (
+      {/* Full-Screen Detailed Question View */}
+      {questionDetails && (
         <div className="answers" onClick={(e) => e.stopPropagation()}>
-          <h3>{selectedQuestion.title}</h3>
-          <p className="answer-box">{selectedQuestion.description}</p>
+          <button className="back-button" onClick={() => setQuestionDetails(null)}>
+            ← Back to Questions
+          </button>
 
+          <h3>{questionDetails.question.title}</h3>
+          <p className="answer-box">{questionDetails.question.description}</p>
+
+          {/* Question Images */}
+          <div className="image-preview">
+            {questionDetails.associatedFiles?.map((file) => (
+              <img
+                key={file.id}
+                src={file.url}
+                alt="question-img"
+                className="thumbnail"
+                onClick={() => window.open(file.url, "_blank")}
+              />
+            ))}
+          </div>
+
+          {/* Answer Button */}
           <button
             className="answer-btn"
             onClick={() => setShowAnswerForm(!showAnswerForm)}
@@ -192,6 +215,7 @@ export default function Forum() {
             {showAnswerForm ? "Cancel" : "Answer"}
           </button>
 
+          {/* Answer Form */}
           {showAnswerForm && (
             <form className="answer-form" onSubmit={handleAnswerSubmit}>
               <input
@@ -215,6 +239,31 @@ export default function Forum() {
               <button type="submit">Submit Answer</button>
             </form>
           )}
+
+          {/* Answers List */}
+          <div className="all-answers">
+            {questionDetails.answers.length > 0 ? (
+              questionDetails.answers.map((ans, idx) => (
+                <div key={idx} className="single-answer">
+                  <h4>{ans.answerData.title}</h4>
+                  <p>{ans.answerData.description}</p>
+                  <div className="image-preview">
+                    {ans.answerFiles?.map((img) => (
+                      <img
+                        key={img.id}
+                        src={img.url}
+                        alt="answer-img"
+                        className="thumbnail"
+                        onClick={() => window.open(img.url, "_blank")}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No answers yet.</p>
+            )}
+          </div>
         </div>
       )}
 
