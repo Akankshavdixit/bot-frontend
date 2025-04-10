@@ -261,7 +261,7 @@ export default function Forum() {
                 </div>
               ))
             ) : (
-              <p>No answers yet.</p>
+              <p>Be the first one to answer!</p>
             )}
           </div>
         </div>

@@ -635,6 +635,83 @@ body {
   cursor: pointer;
 }
 
+.fullscreen-chatbot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: #282828 ; /* Or any background you prefer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 1rem;
+}
+
+
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: red;
+}
+
+
+.question-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vote-controls.inline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.8rem;
+  gap: 5px;
+}
+
+.vote-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.vote-button:hover {
+  transform: scale(1.2);
+}
+
+/* ✅ New styles for active upvote/downvote */
+.vote-button.active {
+  color: #007bff; /* You can change this to any color you like */
+}
+
+/* Optional: different colors for up/down */
+.vote-button.active.upvote {
+  color: #28a745; /* green for upvote */
+}
+
+.vote-button.active.downvote {
+  color: #dc3545; /* red for downvote */
+}
+
+.vote-count {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+
 
 
 

@@ -1,11 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import "../styles.css";
-
-
-
 
 const AddQuestion = () => {
   const navigate = useNavigate();
@@ -25,7 +21,7 @@ const AddQuestion = () => {
       try {
         const response = await axios.get("http://localhost:3000/api/v1/categories");
         if (response.status === 200) {
-          setAllCategories(response.data.data); // expecting [{id, name}, ...]
+          setAllCategories(response.data.data);
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -35,7 +31,6 @@ const AddQuestion = () => {
     fetchCategories();
   }, []);
 
-  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -92,8 +87,7 @@ const AddQuestion = () => {
         setDescription("");
         setCategories("");
         setFiles([]);
-
-        setTimeout(() => navigate("/"), 1000);
+        setTimeout(() => navigate("/"), 1000); // Redirect to forum
       }
     } catch (error) {
       setMessage("Failed to add question.");
@@ -103,6 +97,15 @@ const AddQuestion = () => {
 
   return (
     <div className="add-question-container">
+      {/* Cross button to close */}
+      <button
+        className="close-button"
+        onClick={() => navigate("/")}
+        title="Close"
+      >
+        ❌
+      </button>
+
       <h2>Add a Question</h2>
       {message && (
         <p className={`message ${message.includes("successfully") ? "success" : "error"}`}>
@@ -124,7 +127,6 @@ const AddQuestion = () => {
           required
         ></textarea>
 
-        {/* Category field with dropdown */}
         <div className="dropdown-container" ref={dropdownRef}>
           <div className="dropdown-input" onClick={() => setShowDropdown(!showDropdown)}>
             <input
