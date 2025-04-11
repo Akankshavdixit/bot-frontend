@@ -187,83 +187,85 @@ export default function Forum() {
 
       {message && <div className="message-banner">{message}</div>}
 
-      {/* Trending Categories Pie Chart */}
-      {!questionDetails && trending.length > 0 && (
-        <div className="trending-box">
-          <h2>🔥Most popular categories</h2>
-          <ResponsiveContainer width={300} height={300}>
-            <PieChart>
-              <Pie
-                data={trending}
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                dataKey="value"
-                nameKey="name"
-                label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-
-              >
-                {trending.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      {/* Tabs */}
-      {!questionDetails && (
-        <div className="tabs-wrapper">
-          <div className="tabs-scroll">
-            {categories.map((cat, index) => (
-              <button
-                key={index}
-                className={selectedCategory === cat.name ? "active" : ""}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedCategory(cat.name);
-                  setSelectedQuestionId(null);
-                  setQuestionDetails(null);
-                }}
-              >
-                {cat.name.replace(/_/g, " ")}
-              </button>
-            ))}
+      <div className="content-wrapper">
+        {/* Left Section */}
+        <div className="left-section">
+          {/* Tabs */}
+          <div className="tabs-wrapper">
+            <div className="tabs-scroll">
+              {categories.map((cat, index) => (
+                <button
+                  key={index}
+                  className={selectedCategory === cat.name ? "active" : ""}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedCategory(cat.name);
+                    setSelectedQuestionId(null);
+                    setQuestionDetails(null);
+                  }}
+                >
+                  {cat.name.replace(/_/g, " ")}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
 
-      {/* Questions List */}
-      {!questionDetails && (
-        <div className="questions">
-          {questions.length > 0 ? (
-            questions.map((q) => (
-              <div
-                key={q.id}
-                className={`question ${selectedQuestionId === q.id ? "active" : ""}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleQuestionClick(q.id);
-                }}
-              >
-                <div className="question-card">
-                  <h3>{q.title}</h3>
-                  <p className="text-muted">{q.description.slice(0, 40)}...</p>
-                  <div className="vote-display">
-                    <span role="img" aria-label="thumb">👍</span>
-                    <span>{q.vote_count}</span>
+          {/* Questions List */}
+          <div className="questions">
+            {questions.length > 0 ? (
+              questions.map((q) => (
+                <div
+                  key={q.id}
+                  className={`question ${selectedQuestionId === q.id ? "active" : ""}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleQuestionClick(q.id);
+                  }}
+                >
+                  <div className="question-card">
+                    <h3>{q.title}</h3>
+                    <p className="text-muted">{q.description.slice(0, 40)}...</p>
+                    <div className="vote-display">
+                      <span role="img" aria-label="thumb">👍</span>
+                      <span>{q.vote_count}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No questions available.</p>
+              ))
+            ) : (
+              <p>No questions available.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="right-section">
+          {trending.length > 0 && (
+            <div className="trending-box">
+              <h2>🔥Most popular categories</h2>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={trending}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={100}
+                    dataKey="value"
+                    nameKey="name"
+                    label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+                  >
+                    {trending.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           )}
         </div>
-      )}
+      </div>
 
       {/* Detailed Question View */}
       {questionDetails && (
@@ -356,7 +358,7 @@ export default function Forum() {
         className="floating-button chatbot-button"
         onClick={(e) => {
           e.stopPropagation();
-          setShowChatbot(!showChatbot);
+          navigate("/chatbot");
         }}
       >
         <FaRobot />

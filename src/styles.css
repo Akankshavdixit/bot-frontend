@@ -101,7 +101,44 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0;
+  overflow: hidden; /* Prevent horizontal scrolling */
+}
+
+.content-wrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1600px; /* Increased width for a wider layout */
+  margin: 0 auto; /* Center the content */
   padding: 20px;
+  gap: 20px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.left-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto; /* Allow vertical scrolling if content overflows */
+  border: 1px solid #444; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Add padding inside the border */
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 350px; /* Ensure enough space for the trending box */
+  max-width: 400px; /* Slightly increase the maximum width */
+  max-height: 70vh; /* Limit the height to 70% of the viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #444; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Add padding inside the border */
 }
 
 .navbar {
@@ -196,12 +233,14 @@ body {
 
 /* Question Section */
 .questions {
-  width: 80%;
+  width: 100%;
   background: #181818;
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  max-height: 70vh; /* Limit the height to 70% of the viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .question {
@@ -209,10 +248,6 @@ body {
   border-bottom: 1px solid #333;
   cursor: pointer;
   transition: background 0.3s;
-}
-
-.question:hover {
-  background: #222;
 }
 
 /* Answer Preview */
@@ -228,27 +263,229 @@ body {
 
 /* Answers Section */
 .answers {
-  width: 80%;
-  background: #181818;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  max-height: 300px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #1a1a1a; /* Slightly darker background for focus */
   overflow-y: auto;
+  padding: 30px;
+  z-index: 999;
+  width: 100%;
+  max-height: 100%;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); /* Stronger shadow for emphasis */
+  border-radius: 12px; /* Rounded corners */
 }
 
-/* Answer Box */
+.answers h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00a878; /* Your theme green for the detailed question title */
+  margin-bottom: 15px;
+  text-align: center; /* Center the title */
+}
+
 .answer-box {
-  padding: 10px;
-  margin: 10px 0;
+  margin: 15px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05); /* Subtle background for text */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+  border-radius: 12px;
+  color: #d4d4d4;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Add subtle shadow */
+}
+
+.vote-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px 0;
+  gap: 15px; /* Add spacing between elements */
+}
+
+.vote-button {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 8px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.vote-button:hover {
+  transform: scale(1.3);
+}
+
+.upvote {
+  color: #00ff88; /* Green for upvote */
+}
+
+.downvote {
+  color: #ff4d4d; /* Red for downvote */
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Increased spacing between images */
+  margin-top: 20px;
+  justify-content: center; /* Center the images */
+}
+
+.thumbnail {
+  max-width: 180px;
+  max-height: 180px;
+  border: 2px solid rgba(255, 255, 255, 0.2); /* Subtle border */
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Highlight on hover */
+}
+
+.answer-btn {
+  background-color: #00a878;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Center the button */
+}
+
+.answer-btn:hover {
+  background-color: #00865a;
+  transform: scale(1.1);
+}
+
+.single-answer {
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background-color: #282828;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3); /* Subtle glow */
+}
+
+.single-answer h4 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #00ff88;
+  margin-bottom: 12px;
+}
+
+.single-answer p {
+  font-size: 1.1rem;
+  color: #d4d4d4;
+  line-height: 1.6;
+}
+
+.back-button {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Center the button */
+}
+
+.back-button:hover {
+  background-color: #555;
+  transform: scale(1.1);
+}
+
+.vote-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  color: #00ff88;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.question-card {
+  position: relative;
+  padding: 1rem;
+  margin: 0.75rem 0;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 255, 136, 0.2);
+  color: white; /* Default color for the title */
+}
+
+.question-card p {
+  color: #00a878; /* Your theme green for the description */
+  margin-top: 5px; /* Add spacing between title and description */
+}
+
+.trending-box {
+  background: #1e1e1e;
+  color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 20px #00ff88;
+  text-align: center;
+  width: 100%; /* Ensure it takes full width of the right section */
+  margin-top: 20px; /* Add margin to move it down */
+}
+
+.trending-box {
+  margin: 5px auto;
+  padding: 32px 24px; /* more vertical and horizontal padding */
+  background: #1e1e1e;
+  color: #fff;
+  border-radius: 16px;
+  max-width: 500px; /* narrow it down a bit for focus */
+  box-shadow: 0 0 20px #00ff88;
+  text-align: center;
 }
 
 
+.trending-box h2 {
+  margin-bottom: 12px;
+  color: #ff6600;
+}
+
+.trending-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.trending-card {
+  background: #2a2a2a;
+  padding: 12px 16px;
+  border-radius: 12px;
+  flex: 1 1 200px;
+  box-shadow: inset 0 0 5px #ff6600;
+}
+
+.trending-card h4 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  color: #fff;
+}
 
 .auth-container {
   width: 400px;
@@ -568,28 +805,45 @@ body {
 .image-preview {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 20px; /* Increased spacing between images */
+  margin-top: 20px;
+  justify-content: center; /* Center the images */
 }
 
 .thumbnail {
-  width: 120px;
-  height: auto;
-  border: 1px solid #ccc;
+  max-width: 180px;
+  max-height: 180px;
+  border: 2px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+  border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .thumbnail:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Highlight on hover */
 }
 
 .single-answer {
-  margin-top: 20px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   background-color: #282828;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3); /* Subtle glow */
+}
+
+.single-answer h4 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #00ff88;
+  margin-bottom: 12px;
+}
+
+.single-answer p {
+  font-size: 1.1rem;
+  color: #d4d4d4;
+  line-height: 1.6;
 }
 
 .answers {
@@ -598,107 +852,63 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #282828;
+  background-color: #1a1a1a; /* Slightly darker background for focus */
   overflow-y: auto;
-  padding: 20px;
+  padding: 30px;
   z-index: 999;
   width: 100%;
-  max-height:100%;
+  max-height: 100%;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); /* Stronger shadow for emphasis */
+  border-radius: 12px; /* Rounded corners */
 }
 
 .back-button {
-  background-color: #eee;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.answer-box {
-  margin: 10px 0;
-  white-space: pre-wrap;
-}
-
-.thumbnail {
-  max-width: 150px;
-  max-height: 150px;
-  margin: 10px;
-  cursor: pointer;
-}
-
-.answer-form input,
-.answer-form textarea {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-}
-
-.answer-form button {
-  background-color: #007bff;
+  background-color: #444;
   color: white;
-  padding: 10px 15px;
   border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Center the button */
 }
 
-.fullscreen-chatbot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999;
-  background-color: #282828 ; /* Or any background you prefer */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
-  padding: 1rem;
+.back-button:hover {
+  background-color: #555;
+  transform: scale(1.1);
 }
-
-
-.close-button {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 20px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.close-button:hover {
-  color: red;
-}
-
 
 .vote-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px 0;
+  margin: 25px 0;
+  gap: 15px; /* Add spacing between elements */
 }
 
 .vote-button {
   background: transparent;
   border: none;
-  font-size: 24px;
+  font-size: 28px;
   cursor: pointer;
-  padding: 5px;
-  transition: transform 0.2s ease;
+  padding: 8px;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .vote-button:hover {
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 .upvote {
-  color: green;
+  color: #00ff88; /* Green for upvote */
 }
 
 .downvote {
-  color: red;
+  color: #ff4d4d; /* Red for downvote */
 }
 
 .vote-display {
@@ -719,11 +929,28 @@ body {
   margin: 0.75rem 0;
   background-color: #1e1e1e;
   border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0,255,136,0.2);
+  box-shadow: 0 0 5px rgba(0, 255, 136, 0.2);
+  color: white; /* Default color for the title */
+}
+
+.question-card p {
+  color: #00a878; /* Your theme green for the description */
+  margin-top: 5px; /* Add spacing between title and description */
 }
 
 .trending-box {
-  margin: 20px auto;
+  background: #1e1e1e;
+  color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 20px #00ff88;
+  text-align: center;
+  width: 100%; /* Ensure it takes full width of the right section */
+  margin-top: 20px; /* Add margin to move it down */
+}
+
+.trending-box {
+  margin: 5px auto;
   padding: 32px 24px; /* more vertical and horizontal padding */
   background: #1e1e1e;
   color: #fff;
@@ -757,6 +984,36 @@ body {
   margin: 0 0 8px;
   font-size: 1.1rem;
   color: #fff;
+}
+
+.chatbot-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1e1e1e; /* Dark background */
+  color: white;
+  padding: 20px;
+}
+
+.chatbot-page .back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.chatbot-page .back-button:hover {
+  background-color: #555;
+  transform: scale(1.05);
 }
 
 
