@@ -3,6 +3,14 @@ import { FaPlus, FaRobot } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Chatbot from "./Chatbot";
 import axios from "axios";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import "../styles.css";
 
 export default function Forum() {
@@ -17,7 +25,10 @@ export default function Forum() {
   const [answerDescription, setAnswerDescription] = useState("");
   const [answerFile, setAnswerFile] = useState(null);
   const [message, setMessage] = useState("");
+  const [trending, setTrending] = useState([]);
   const navigate = useNavigate();
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#9932CC", "#FF6347", "#32CD32"];
 
   useEffect(() => {
     axios
@@ -34,6 +45,25 @@ export default function Forum() {
         }
       })
       .catch(() => setCategories([]));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/v1/trending")
+      .then((res) => {
+        const trendingData = res.data?.data || [];
+        const totalUpvotes = trendingData.reduce((sum, cat) => sum + cat.totalUpvotes, 0);
+        const withPercent = trendingData.map((cat) => ({
+          ...cat,
+          name: cat.name.replace(/_/g, " "),
+          value: Math.round((cat.totalUpvotes / totalUpvotes) * 100),
+        }));
+        setTrending(withPercent);
+      })
+      .catch((err) => {
+        console.error("TRENDING FETCH ERROR:", err);
+        setTrending([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -157,6 +187,33 @@ export default function Forum() {
 
       {message && <div className="message-banner">{message}</div>}
 
+      {/* Trending Categories Pie Chart */}
+      {!questionDetails && trending.length > 0 && (
+        <div className="trending-box">
+          <h2>🔥Most popular categories</h2>
+          <ResponsiveContainer width={300} height={300}>
+            <PieChart>
+              <Pie
+                data={trending}
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                dataKey="value"
+                nameKey="name"
+                label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+
+              >
+                {trending.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
       {/* Tabs */}
       {!questionDetails && (
         <div className="tabs-wrapper">
@@ -193,16 +250,13 @@ export default function Forum() {
                 }}
               >
                 <div className="question-card">
-                <h3>{q.title}</h3>
-                <p className="text-muted">{q.description.slice(0, 40)}...</p>
-
-                {/* Vote display to the right */}
-                <div className="vote-display">
-                  <span role="img" aria-label="thumb">👍</span>
-                  <span>{q.vote_count}</span>
+                  <h3>{q.title}</h3>
+                  <p className="text-muted">{q.description.slice(0, 40)}...</p>
+                  <div className="vote-display">
+                    <span role="img" aria-label="thumb">👍</span>
+                    <span>{q.vote_count}</span>
+                  </div>
                 </div>
-              </div>
-
               </div>
             ))
           ) : (
@@ -211,7 +265,7 @@ export default function Forum() {
         </div>
       )}
 
-      {/* Full-Screen Detailed Question View */}
+      {/* Detailed Question View */}
       {questionDetails && (
         <div className="answers" onClick={(e) => e.stopPropagation()}>
           <button className="back-button" onClick={() => setQuestionDetails(null)}>
@@ -221,18 +275,12 @@ export default function Forum() {
           <h3>{questionDetails.question.title}</h3>
           <p className="answer-box">{questionDetails.question.description}</p>
 
-          {/* Voting */}
           <div className="vote-box">
-            <button className="vote-button upvote" onClick={() => handleVote('up')}>
-              ▲
-            </button>
+            <button className="vote-button upvote" onClick={() => handleVote('up')}>▲</button>
             <span>{questionDetails.question.vote_count}</span>
-            <button className="vote-button downvote" onClick={() => handleVote('down')}>
-              ▼
-            </button>
+            <button className="vote-button downvote" onClick={() => handleVote('down')}>▼</button>
           </div>
 
-          {/* Question Images */}
           <div className="image-preview">
             {questionDetails.associatedFiles?.map((file) => (
               <img
@@ -245,15 +293,10 @@ export default function Forum() {
             ))}
           </div>
 
-          {/* Answer Button */}
-          <button
-            className="answer-btn"
-            onClick={() => setShowAnswerForm(!showAnswerForm)}
-          >
+          <button className="answer-btn" onClick={() => setShowAnswerForm(!showAnswerForm)}>
             {showAnswerForm ? "Cancel" : "Answer"}
           </button>
 
-          {/* Answer Form */}
           {showAnswerForm && (
             <form className="answer-form" onSubmit={handleAnswerSubmit}>
               <input
@@ -278,7 +321,6 @@ export default function Forum() {
             </form>
           )}
 
-          {/* Answers List */}
           <div className="all-answers">
             {questionDetails.answers.length > 0 ? (
               questionDetails.answers.map((ans, idx) => (
