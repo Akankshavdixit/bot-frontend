@@ -124,6 +124,24 @@ export default function Forum() {
     }
   };
 
+  const handleVote = async (voteType) => {
+    const token = localStorage.getItem("token");
+    if (!token || !questionDetails?.question?.id) return;
+
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/api/v1/questions/${questionDetails.question.id}/vote`,
+        { voteType },
+        { headers: { "x-access-token": token } }
+      );
+      if (res.data?.data) {
+        setQuestionDetails(res.data.data);
+      }
+    } catch (err) {
+      console.error("Vote error:", err);
+    }
+  };
+
   return (
     <div className="forum-container" onClick={handleClickOutside}>
       <nav className="navbar">
@@ -174,8 +192,17 @@ export default function Forum() {
                   handleQuestionClick(q.id);
                 }}
               >
-                <strong>{q.title}</strong>
-                <p className="preview">{q.description?.slice(0, 50)}...</p>
+                <div className="question-card">
+                <h3>{q.title}</h3>
+                <p className="text-muted">{q.description.slice(0, 40)}...</p>
+
+                {/* Vote display to the right */}
+                <div className="vote-display">
+                  <span role="img" aria-label="thumb">👍</span>
+                  <span>{q.vote_count}</span>
+                </div>
+              </div>
+
               </div>
             ))
           ) : (
@@ -193,6 +220,17 @@ export default function Forum() {
 
           <h3>{questionDetails.question.title}</h3>
           <p className="answer-box">{questionDetails.question.description}</p>
+
+          {/* Voting */}
+          <div className="vote-box">
+            <button className="vote-button upvote" onClick={() => handleVote('up')}>
+              ▲
+            </button>
+            <span>{questionDetails.question.vote_count}</span>
+            <button className="vote-button downvote" onClick={() => handleVote('down')}>
+              ▼
+            </button>
+          </div>
 
           {/* Question Images */}
           <div className="image-preview">
