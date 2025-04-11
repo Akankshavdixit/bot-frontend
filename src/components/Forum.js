@@ -172,6 +172,32 @@ export default function Forum() {
     }
   };
 
+  const handleAnswerVote = async (answerId, voteType) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/api/v1/answers/${answerId}/vote`,
+        { voteType },
+        { headers: { "x-access-token": token } }
+      );
+      if (res.data?.data) {
+        // Update the specific answer's vote count with the server response
+        setQuestionDetails((prevDetails) => ({
+          ...prevDetails,
+          answers: prevDetails.answers.map((ans) =>
+            ans.answerData.id === answerId
+              ? { ...ans, answerData: res.data.data }
+              : ans
+          ),
+        }));
+      }
+    } catch (err) {
+      console.error("Answer vote error:", err);
+    }
+  };
+
   return (
     <div className="forum-container" onClick={handleClickOutside}>
       <nav className="navbar">
@@ -329,6 +355,21 @@ export default function Forum() {
                 <div key={idx} className="single-answer">
                   <h4>{ans.answerData.title}</h4>
                   <p>{ans.answerData.description}</p>
+                  <div className="vote-box">
+                    <button
+                      className="vote-button upvote"
+                      onClick={() => handleAnswerVote(ans.answerData.id, "up")}
+                    >
+                      ▲
+                    </button>
+                    <span>{ans.answerData.vote_count}</span>
+                    <button
+                      className="vote-button downvote"
+                      onClick={() => handleAnswerVote(ans.answerData.id, "down")}
+                    >
+                      ▼
+                    </button>
+                  </div>
                   <div className="image-preview">
                     {ans.answerFiles?.map((img) => (
                       <img
