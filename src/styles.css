@@ -956,14 +956,14 @@ body {
   color: #fff;
   border-radius: 16px;
   max-width: 500px; /* narrow it down a bit for focus */
-  box-shadow: 0 0 20px #00ff88;
+  box-shadow: 0 0 10px #00ff88;
   text-align: center;
 }
 
 
 .trending-box h2 {
   margin-bottom: 12px;
-  color: #ff6600;
+  color: #e64a19;
 }
 
 .trending-cards {
@@ -1014,6 +1014,172 @@ body {
 .chatbot-page .back-button:hover {
   background-color: #555;
   transform: scale(1.05);
+}
+
+.question-details {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.question-description {
+  flex: 4;
+  background-color: #2a2a2a; /* Gray background for description */
+  padding: 20px;
+  border-radius: 10px;
+  color: #d4d4d4;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Preserve line breaks and spacing */
+  word-wrap: break-word; /* Break long words to fit within the container */
+  font-size: 1rem; /* Ensure consistent font size */
+  color: #d4d4d4; /* Light gray text color */
+  margin-top: 10px; /* Add spacing above the description */
+}
+
+.question-vote-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #2a2a2a; /* Gray background for vote box */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.question-vote-box .vote-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: transparent;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.question-vote-box .vote-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.question-vote-box span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00ff88; /* Green for vote count */
+}
+
+.answer-details {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.answer-description {
+  flex: 4;
+  background-color: #2a2a2a; /* Gray background for description */
+  padding: 20px;
+  border-radius: 10px;
+  color: #d4d4d4;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Preserve line breaks and spacing */
+  word-wrap: break-word; /* Break long words to fit within the container */
+  font-size: 1rem; /* Ensure consistent font size */
+  color: #d4d4d4; /* Light gray text color */
+  margin-top: 10px; /* Add spacing above the description */
+}
+
+.answer-vote-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #2a2a2a; /* Gray background for vote box */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.answer-vote-box .vote-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: transparent;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.answer-vote-box .vote-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.answer-vote-box span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00ff88; /* Green for vote count */
+}
+
+.profile-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  color: white;
+  text-align: center;
+}
+
+.profile-container h2 {
+  color: #00a878;
+  margin-bottom: 20px;
+}
+
+.profile-details p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  word-wrap: break-word; /* Ensure long text wraps properly */
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+.auth-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  background: #282828;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  resize: none;
+}
+
+.auth-textarea:focus {
+  border-color: #00a878;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 168, 120, 0.5);
 }
 
 

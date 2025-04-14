@@ -3,11 +3,11 @@ import "../styles.css";
 
 const Auth = ({ setUser }) => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ email: "", password: "", username: "" });
+  const [formData, setFormData] = useState({ email: "", password: "", username: "", about: "" });
 
   const toggleAuth = () => {
     setIsLogin(!isLogin);
-    setFormData({ email: "", password: "", username: "" }); // Reset form on toggle
+    setFormData({ email: "", password: "", username: "", about: "" }); // Reset form on toggle
   };
 
   const handleChange = (e) => {
@@ -29,6 +29,7 @@ const Auth = ({ setUser }) => {
 
       const data = await response.json();
       if (data.success) {
+        console.log(data.data);
         localStorage.setItem("token", data.data);
         setUser(data.data);
         console.log(data);
@@ -46,14 +47,24 @@ const Auth = ({ setUser }) => {
       <h2>{isLogin ? "Login" : "Sign Up"}</h2>
       <form className="auth-form" onSubmit={handleSubmit}>
         {!isLogin && (
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
+          <>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+            <textarea
+              name="about"
+              placeholder="Tell us about yourself"
+              value={formData.about}
+              onChange={handleChange}
+              rows="4"
+              className="auth-textarea"
+            />
+          </>
         )}
         <input
           type="email"

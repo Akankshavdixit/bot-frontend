@@ -28,7 +28,9 @@ export default function Forum() {
   const [trending, setTrending] = useState([]);
   const navigate = useNavigate();
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#9932CC", "#FF6347", "#32CD32"];
+  const COLORS = ["#255F38", "#1DCD9F", "#169976"];
+
+
 
   useEffect(() => {
     axios
@@ -204,7 +206,7 @@ export default function Forum() {
         <h1>Discussion Forum</h1>
         <div>
           <button>About</button>
-          <button>My Profile</button>
+          <button onClick={() => navigate("/profile")}>My Profile</button>
           <button className="logout-button" onClick={handleLogout}>
             Logout
           </button>
@@ -268,7 +270,7 @@ export default function Forum() {
         <div className="right-section">
           {trending.length > 0 && (
             <div className="trending-box">
-              <h2>🔥Most popular categories</h2>
+              <h2>Most popular categories</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
@@ -301,12 +303,26 @@ export default function Forum() {
           </button>
 
           <h3>{questionDetails.question.title}</h3>
-          <p className="answer-box">{questionDetails.question.description}</p>
 
-          <div className="vote-box">
-            <button className="vote-button upvote" onClick={() => handleVote('up')}>▲</button>
-            <span>{questionDetails.question.vote_count}</span>
-            <button className="vote-button downvote" onClick={() => handleVote('down')}>▼</button>
+          <div className="question-details">
+            <div className="question-vote-box">
+              <button
+                className="vote-button upvote"
+                onClick={() => handleVote("up")}
+              >
+                ▲
+              </button>
+              <span>{questionDetails.question.vote_count}</span>
+              <button
+                className="vote-button downvote"
+                onClick={() => handleVote("down")}
+              >
+                ▼
+              </button>
+            </div>
+            <div className="question-description">
+              <p>{questionDetails.question.description}</p>
+            </div>
           </div>
 
           <div className="image-preview">
@@ -353,33 +369,37 @@ export default function Forum() {
             {questionDetails.answers.length > 0 ? (
               questionDetails.answers.map((ans, idx) => (
                 <div key={idx} className="single-answer">
-                  <h4>{ans.answerData.title}</h4>
-                  <p>{ans.answerData.description}</p>
-                  <div className="vote-box">
-                    <button
-                      className="vote-button upvote"
-                      onClick={() => handleAnswerVote(ans.answerData.id, "up")}
-                    >
-                      ▲
-                    </button>
-                    <span>{ans.answerData.vote_count}</span>
-                    <button
-                      className="vote-button downvote"
-                      onClick={() => handleAnswerVote(ans.answerData.id, "down")}
-                    >
-                      ▼
-                    </button>
-                  </div>
-                  <div className="image-preview">
-                    {ans.answerFiles?.map((img) => (
-                      <img
-                        key={img.id}
-                        src={img.url}
-                        alt="answer-img"
-                        className="thumbnail"
-                        onClick={() => window.open(img.url, "_blank")}
-                      />
-                    ))}
+                  <div className="answer-details">
+                    <div className="answer-vote-box">
+                      <button
+                        className="vote-button upvote"
+                        onClick={() => handleAnswerVote(ans.answerData.id, "up")}
+                      >
+                        ▲
+                      </button>
+                      <span>{ans.answerData.vote_count}</span>
+                      <button
+                        className="vote-button downvote"
+                        onClick={() => handleAnswerVote(ans.answerData.id, "down")}
+                      >
+                        ▼
+                      </button>
+                    </div>
+                    <div className="answer-description">
+                      <h4>{ans.answerData.title}</h4>
+                      <p>{ans.answerData.description}</p>
+                      <div className="image-preview">
+                        {ans.answerFiles?.map((img) => (
+                          <img
+                            key={img.id}
+                            src={img.url}
+                            alt="answer-img"
+                            className="thumbnail"
+                            onClick={() => window.open(img.url, "_blank")}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))
