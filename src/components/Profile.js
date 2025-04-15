@@ -160,6 +160,9 @@ export default function Profile() {
 
   return (
     <div className="profile-container">
+      <button className="back-button" onClick={() => window.history.back()}>
+        ← Back
+      </button>
       {!selectedQuestionDetails ? (
         <div className="profile-card" style={{ maxWidth: "1000px", width: "95%" }}>
           <div className="profile-header">

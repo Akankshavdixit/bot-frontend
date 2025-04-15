@@ -420,20 +420,17 @@ body {
   background-color: #444;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.1rem;
-  margin-bottom: 25px;
+  font-size: 1rem;
+  margin-bottom: 20px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  display: block;
-  margin-left: auto;
-  margin-right: auto; /* Center the button */
 }
 
 .back-button:hover {
   background-color: #555;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .vote-display {
@@ -890,20 +887,17 @@ body {
   background-color: #444;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.1rem;
-  margin-bottom: 25px;
+  font-size: 1rem;
+  margin-bottom: 20px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  display: block;
-  margin-left: auto;
-  margin-right: auto; /* Center the button */
 }
 
 .back-button:hover {
   background-color: #555;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .vote-box {
