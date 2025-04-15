@@ -288,7 +288,7 @@ body {
 /* Answers Section */
 .answers {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -299,7 +299,7 @@ body {
   width: 100%;
   max-height: 100%;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); /* Stronger shadow for emphasis */
-  border-radius: 12px; /* Rounded corners */
+  border-radius: 0; /* Remove rounded corners for full-screen view */
 }
 
 .answers h3 {
@@ -872,7 +872,7 @@ body {
 
 .answers {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -883,7 +883,7 @@ body {
   width: 100%;
   max-height: 100%;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); /* Stronger shadow for emphasis */
-  border-radius: 12px; /* Rounded corners */
+  border-radius: 0; /* Remove rounded corners for full-screen view */
 }
 
 .back-button {
@@ -1157,25 +1157,95 @@ body {
 }
 
 .profile-container {
-  max-width: 500px;
-  margin: 50px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  background-color: #1e1e1e;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  color: white;
-  text-align: center;
+  background-color: #000000; /* Black background */
+  min-height: 100vh;
+  width: 100vw; /* Full width */
 }
 
-.profile-container h2 {
-  color: #00a878;
+.profile-card {
+  background: #000000; /* Black card */
+  border: 2px solid #1dcd9f; /* Green border */
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 1000px; /* Increased width */
+  width: 95%; /* Adjusted to take more space */
+  text-align: center;
+  color: #1dcd9f; /* Green text */
+}
+
+.profile-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1dcd9f; /* Green heading */
+}
+
+.profile-subtitle {
+  font-size: 14px;
+  color: #1dcd9f; /* Green subtitle */
   margin-bottom: 20px;
 }
 
-.profile-details p {
-  font-size: 1.1rem;
-  margin: 10px 0;
-  word-wrap: break-word; /* Ensure long text wraps properly */
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-info, .profile-categories {
+  background: #000000; /* Black sections */
+  border: 1px solid #1dcd9f; /* Green border */
+  border-radius: 8px;
+  padding: 15px;
+  text-align: left;
+}
+
+.profile-info h3, .profile-categories h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1dcd9f; /* Green headings */
+  margin-bottom: 10px;
+}
+
+.profile-info p, .profile-categories p {
+  font-size: 14px;
+  color: #1dcd9f; /* Green text */
+  margin: 5px 0;
+}
+
+.field-label {
+  color: #1dcd9f; /* Green for field labels */
+  font-weight: bold;
+}
+
+.field-value {
+  color: #ffffff; /* White for field values */
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.category-badge {
+  background-color: #1dcd9f; /* Green badge */
+  color: #000000; /* Black text */
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+
+.category-badge:hover {
+  background-color: #169976; /* Darker green on hover */
 }
 
 .error-message {
@@ -1376,6 +1446,152 @@ body {
 
 .admin-panel-button:hover {
   background-color: #00865a;
+}
+
+/* Category Badges */
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.category-badge {
+  background-color: #1dcd9f;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: capitalize;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+
+.category-badge:hover {
+  background-color: #169976;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #000000; /* Black background */
+  min-height: 100vh;
+  width: 100vw; /* Full width */
+}
+
+.profile-card {
+  background: #000000; /* Black background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  max-width: 1000px; /* Increased width */
+  width: 95%; /* Adjusted to take more space */
+  text-align: center;
+  color: #ffffff; /* White text */
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.profile-info, .profile-categories {
+  background: #1a1a1a; /* Dark gray for sections */
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info h3, .profile-categories h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.profile-info p, .profile-categories p {
+  font-size: 16px;
+  color: #cccccc;
+  margin: 5px 0;
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-badge {
+  background-color: #1dcd9f;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: capitalize;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+
+.category-badge:hover {
+  background-color: #169976;
+}
+
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.question-preview {
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.question-preview:hover {
+  background-color: #333;
+}
+
+.question-preview h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1dcd9f;
+  margin-bottom: 5px;
+}
+
+.question-preview .preview {
+  font-size: 14px;
+  color: #cccccc;
+}
+
+.timestamp {
+  font-size: 5px; /* Smaller text size */
+  color: #cccccc;
+  position: absolute;
+  right: 10px; /* Align to the rightmost end */
+  bottom: 10px; /* Place below the likes */
+  text-align: right;
+  margin-top: 5px; /* Add separation from the question */
 }
 
 
