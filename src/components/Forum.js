@@ -75,7 +75,9 @@ export default function Forum() {
         .then((res) => {
           const questionArray = res.data?.data;
           if (Array.isArray(questionArray)) {
-            setQuestions(questionArray);
+            setQuestions(
+              questionArray.sort((a, b) => b.vote_count - a.vote_count)
+            );
           } else {
             setQuestions([]);
           }
@@ -253,6 +255,7 @@ export default function Forum() {
                   <div className="question-card">
                     <h3>{q.title}</h3>
                     <p className="text-muted">{q.description.slice(0, 40)}...</p>
+                    <p className="text-muted">{new Date(q.createdAt).toLocaleString()}</p>
                     <div className="vote-display">
                       <span role="img" aria-label="thumb">👍</span>
                       <span>{q.vote_count}</span>

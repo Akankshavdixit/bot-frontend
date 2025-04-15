@@ -47,13 +47,29 @@ body {
   padding-bottom: 10px;
   display: flex;
   flex-direction: column;
+  padding: 15px;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #00a878 #282828;
+}
+
+.chatbox::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbox::-webkit-scrollbar-thumb {
+  background-color: #00a878;
+  border-radius: 3px;
+}
+
+.chatbox::-webkit-scrollbar-track {
+  background: #282828;
 }
 
 /* Messages */
 .message {
-  padding: 8px;
-  margin: 5px;
-  border-radius: 5px;
+  padding: 10px;
+  border-radius: 10px;
   max-width: 70%;
   word-wrap: break-word;
 }
@@ -61,6 +77,7 @@ body {
 .message.bot {
   background: #333;
   align-self: flex-start;
+  color: white;
 }
 
 .message.user {
@@ -76,6 +93,10 @@ body {
   gap: 10px;
   justify-content: center;
   padding-top: 10px;
+  padding: 10px;
+  background-color: #282828;
+  border-top: 1px solid #444;
+  justify-content: center;
 }
 
 .option-button {
@@ -86,10 +107,13 @@ body {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.2s;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 .option-button:hover {
   background: #00865a; /* Darker green on hover */
+  background-color: #00865a;
 }
 
 /* Forum Styles */
@@ -1180,6 +1204,178 @@ body {
   border-color: #00a878;
   outline: none;
   box-shadow: 0 0 5px rgba(0, 168, 120, 0.5);
+}
+
+.admin-panel {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.admin-panel h2 {
+  text-align: center;
+  color: #00a878;
+  margin-bottom: 20px;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.upload-form input,
+.upload-form select {
+  padding: 10px;
+  border: 1px solid #444;
+  background: #282828;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.upload-form input:focus,
+.upload-form select:focus {
+  border-color: #00a878;
+  outline: none;
+}
+
+.upload-form button {
+  padding: 12px;
+  background: #00a878;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.upload-form button:hover {
+  background: #00865a;
+}
+
+.message {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #ff4d4d;
+}
+
+.admin-panel-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background-color: #00a878;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.admin-panel-button:hover {
+  background-color: #00865a;
+}
+
+.admin-panel-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.admin-panel-content {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.close-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: #cc0000;
+}
+
+.chatbot-container {
+  width: 400px;
+  height: 600px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  margin: 20px auto;
+  position: relative;
+}
+
+.chatbot-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #282828;
+  border-top: 1px solid #444;
+}
+
+.reset-button {
+  padding: 10px 15px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: #cc0000;
+}
+
+.admin-panel-button {
+  padding: 10px 15px;
+  background-color: #00a878;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.admin-panel-button:hover {
+  background-color: #00865a;
 }
 
 
